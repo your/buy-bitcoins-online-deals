@@ -13,6 +13,8 @@ NOTIFICATION_EMAIL = ''.freeze
 
 STDOUT.sync = true
 
+flag_allow_new_traders = ARGV.include?('--allow-new-traders')
+
 def send_email(subject, txt, recipient = NOTIFICATION_EMAIL, sender = recipient)
   mg_client = Mailgun::Client.new(MAILGUN_API_KEY)
 
@@ -58,6 +60,11 @@ puts
     ad_list = fetch_page(page)
     ad_list.each do |ad|
       data = ad[:data]
+      actually_allow_new_traders = data[:require_trade_volume].zero? &&
+                                   data[:require_feedback_score].zero?
+
+      next if flag_allow_new_traders && actually_allow_new_traders
+
       fetched_ads << {
         price: data[:temp_price_usd].to_f,
         link: ad[:actions][:public_view],
