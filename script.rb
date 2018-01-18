@@ -61,7 +61,8 @@ puts
       fetched_ads << {
         price: data[:temp_price_usd].to_f,
         link: ad[:actions][:public_view],
-        method: data[:online_provider]
+        method: data[:online_provider],
+        country: data[:countrycode]
       }
     end
     fetched_pages += 1
@@ -79,15 +80,16 @@ fetched_ads.sort_by! { |k| k[:price] }
 results = "\n"
 results += "Top #{MAX_ADS} cheapest buy-bitcoins-online deals:\n\n"
 
-results += format "%-15s | %-15s | %s\n",
+results += format "%-15s | %-20s | %-10s | %s\n",
                   'Price/BTC (USD)',
                   'Payment Method',
+                  'Country',
                   'Link'
 
-results += "#{'-' * 70}\n"
+results += "#{'-' * 90}\n"
 
 fetched_ads.first(MAX_ADS).each do |ad|
-  results += format "%-15s | %-15s | %s\n", ad[:price], ad[:method], ad[:link]
+  results += format "%-15s | %-20s | %-10s | %s\n", ad[:price], ad[:method], ad[:country], ad[:link]
 end
 
 results += "\n"
