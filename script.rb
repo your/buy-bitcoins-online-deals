@@ -61,6 +61,7 @@ puts
     ad_list.each do |ad|
       data = ad[:data]
       actually_allow_new_traders = data[:require_trade_volume].zero? &&
+                                   data[:volume_coefficient_btc].to_f.zero? &&
                                    data[:require_feedback_score].zero?
 
       next if flag_allow_new_traders && actually_allow_new_traders
@@ -96,7 +97,8 @@ results += format "%-15s | %-20s | %-10s | %s\n",
 results += "#{'-' * 90}\n"
 
 fetched_ads.first(MAX_ADS).each do |ad|
-  results += format "%-15s | %-20s | %-10s | %s\n", ad[:price], ad[:method], ad[:country], ad[:link]
+  results += format "%-15s | %-20s | %-10s | %s\n",
+                    ad[:price], ad[:method], ad[:country], ad[:link]
 end
 
 results += "\n"
