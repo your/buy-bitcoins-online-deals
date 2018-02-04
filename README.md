@@ -1,5 +1,7 @@
 # Top 100 cheapest buy-bitcoins-online deals finder
 
+### If you are looking for ethereum deals: https://github.com/your/buy-ethereum-online-deals
+
 ## Setup
 
 ```
